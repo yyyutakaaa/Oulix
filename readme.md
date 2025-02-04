@@ -67,7 +67,7 @@ For any questions or suggestions, please reach out via the contact form on the s
 
 ## License
 
-This repository is licensed under the MIT License.
+This repository is licensed under the Apache-2.0 license.
 
 ---
 
