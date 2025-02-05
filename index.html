@@ -258,18 +258,6 @@
         </a>
       </section>
 
-      <!-- Server Status Widget -->
-      <section
-        id="server-stats"
-        class="py-16 px-4 text-center bg-gray-800 bg-opacity-50 backdrop-blur-md"
-      >
-        <h2 class="font-bold text-3xl mb-4">Server Status</h2>
-        <p><strong>Uptime:</strong> <span id="uptime">Laden...</span></p>
-        <p><strong>CPU:</strong> <span id="cpu">Laden...</span></p>
-        <p><strong>Geheugen:</strong> <span id="memory">Laden...</span></p>
-        <p><strong>Disk Usage:</strong> <span id="disk">Laden...</span></p>
-      </section>
-
       <!-- Contact Section -->
       <section
         id="contact"
@@ -331,56 +319,6 @@
       burger.addEventListener("click", () => {
         navLinks.classList.toggle("hidden");
       });
-    </script>
-
-    <!-- Server Stats Fetch Script -->
-    <script>
-      async function fetchStats() {
-        try {
-          const response = await fetch("http://localhost:3000/api/stats");
-          if (!response.ok) throw new Error("Probleem met ophalen van de data");
-          const data = await response.json();
-
-          // Uptime conversie van seconden naar leesbaar formaat
-          const seconds = Math.floor(data.uptime);
-          const hours = Math.floor(seconds / 3600);
-          const minutes = Math.floor((seconds % 3600) / 60);
-          const secs = seconds % 60;
-          document.getElementById(
-            "uptime"
-          ).textContent = `${hours}u ${minutes}m ${secs}s`;
-
-          // CPU info: toon fabrikant, model en aantal cores
-          document.getElementById(
-            "cpu"
-          ).textContent = `${data.cpu.manufacturer} ${data.cpu.brand} (${data.cpu.cores} cores)`;
-
-          // Geheugen info: totaal en vrij in GB
-          const totalMem = (data.mem.total / 1024 ** 3).toFixed(2);
-          const freeMem = (data.mem.free / 1024 ** 3).toFixed(2);
-          document.getElementById(
-            "memory"
-          ).textContent = `${freeMem}GB vrij / ${totalMem}GB totaal`;
-
-          // Disk usage: als voorbeeld de eerste partitie
-          if (data.fsSize && data.fsSize.length) {
-            const disk = data.fsSize[0];
-            const usedGB = (disk.used / 1024 ** 3).toFixed(2);
-            const sizeGB = (disk.size / 1024 ** 3).toFixed(2);
-            document.getElementById(
-              "disk"
-            ).textContent = `${usedGB}GB gebruikt van ${sizeGB}GB (${disk.use}%)`;
-          } else {
-            document.getElementById("disk").textContent = "Geen data";
-          }
-        } catch (err) {
-          console.error("Fout bij ophalen van stats:", err);
-        }
-      }
-
-      // Update de stats elke 5 seconden en haal meteen de data op bij het laden van de pagina
-      setInterval(fetchStats, 5000);
-      fetchStats();
     </script>
   </body>
 </html>
