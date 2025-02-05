@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oulad Server - Mijn Lokale Server</title>
+
+  <script type="text/javascript" nonce="e3b05285abd043fc82fd8a581a2" src="//local.adguard.org?ts=1736186798319&amp;type=content-script&amp;dmn=ouladserver.duckdns.org&amp;url=https%3A%2F%2Fouladserver.duckdns.org%2F&amp;app=com.operasoftware.Opera&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-push&amp;st-loc&amp;st-java&amp;st-dnt"></script>
+  <script type="text/javascript" nonce="e3b05285abd043fc82fd8a581a2" src="//local.adguard.org?ts=1736186798319&amp;name=AdGuard%20Extra&amp;type=user-script"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@600;800&display=swap"
+    rel="stylesheet"
+  >
+  
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  >
+
+  <style>
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Roboto', sans-serif;
+      color: #fff;
+      background: #111;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; 
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: linear-gradient(135deg, #ff006e, #fb5607, #ffbe0b, #3a86ff);
+      background-size: 300% 300%;
+      animation: gradient-animation 15s ease infinite;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 70%);
+      backdrop-filter: blur(2px);
+    }
+
+    @keyframes gradient-animation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    header {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(5px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.8rem;
+      color: #ffbe0b;
+      text-shadow: 2px 2px #000;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links li a {
+      padding: 0.5rem 0;
+      transition: color 0.2s ease;
+      position: relative;
+      font-weight: 600;
+    }
+
+    .nav-links li a::after {
+      content: "";
+      display: block;
+      width: 0%;
+      height: 3px;
+      background: #fff;
+      transition: width 0.3s;
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+    }
+
+    .nav-links li a:hover::after,
+    .nav-links li a.active::after {
+      width: 100%;
+    }
+
+    .burger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .burger div {
+      width: 25px;
+      height: 3px;
+      background-color: #fff;
+      margin: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 1rem 8rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      animation: fadeInDown 1s ease forwards;
+      opacity: 0;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+      animation: fadeInUp 1.2s ease forwards;
+      opacity: 0;
+    }
+
+    .hero .button {
+      display: inline-block;
+      background: #ffbe0b;
+      color: #111;
+      padding: 0.8rem 1.4rem;
+      font-weight: bold;
+      border-radius: 4px;
+      transition: transform 0.3s, background 0.3s;
+      animation: fadeInUp 1.4s ease forwards;
+      opacity: 0;
+    }
+
+    .hero .button:hover {
+      transform: translateY(-2px);
+      background: #fb5607;
+      color: #fff;
+    }
+
+    @keyframes fadeInDown {
+      0% {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    @keyframes fadeInUp {
+      0% {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .services {
+      padding: 5rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .services h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .services h2::after {
+      content: "";
+      width: 80px;
+      height: 4px;
+      background-color: #ffbe0b;
+      display: block;
+      margin: 1rem auto 0;
+      border-radius: 2px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      backdrop-filter: blur(5px);
+      animation: slideUp 1s ease forwards;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .card:nth-child(2) {
+      animation-delay: 0.3s;
+    }
+    .card:nth-child(3) {
+      animation-delay: 0.6s;
+    }
+
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #ffbe0b;
+    }
+
+    .card p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+
+    .service-details ul {
+      margin-top: 1rem;
+    }
+
+    .service-details li {
+      display: flex;
+      align-items: center;
+      margin: 0.5rem 0;
+      font-size: 0.95rem;
+    }
+
+    .service-details li i {
+      margin-right: 0.5rem;
+      color: #fb5607;
+    }
+
+    .services::before {
+      content: "";
+      position: absolute;
+      top: -20%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(#fb5607, transparent 70%);
+      border-radius: 50%;
+      z-index: 0;
+      opacity: 0.2;
+      animation: float 6s ease-in-out infinite;
+    }
+    .services::after {
+      content: "";
+      position: absolute;
+      bottom: -20%;
+      left: -20%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(#ffbe0b, transparent 70%);
+      border-radius: 50%;
+      z-index: 0;
+      opacity: 0.2;
+      animation: float 8s ease-in-out infinite;
+      animation-delay: 3s;
+    }
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) translateX(0);
+      }
+      50% {
+        transform: translateY(20px) translateX(20px);
+      }
+    }
+
+    .download {
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .download h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .download h2::after {
+      content: "";
+      width: 80px;
+      height: 4px;
+      background-color: #ffbe0b;
+      display: block;
+      margin: 1rem auto 0;
+      border-radius: 2px;
+    }
+
+    .download-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .download-button {
+      background: linear-gradient(135deg, #3a86ff 0%, #ff006e 100%);
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .download-button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: #000;
+      font-size: 0.9rem;
+      margin-top: 5rem;
+      position: relative;
+    }
+
+    footer p {
+      margin-bottom: 0.5rem;
+    }
+
+    footer p a {
+      color: #ffbe0b;
+      font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background: rgba(0,0,0,0.9);
+        width: 200px;
+        flex-direction: column;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        padding: 2rem;
+        gap: 1rem;
+      }
+      .nav-links.show {
+        transform: translateX(0%);
+      }
+      .burger {
+        display: flex;
+      }
+      .burger.active .line1 {
+        transform: rotate(-45deg) translate(-5px, 6px);
+      }
+      .burger.active .line2 {
+        opacity: 0;
+      }
+      .burger.active .line3 {
+        transform: rotate(45deg) translate(-5px, -6px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="overlay"></div>
+
+  <header>
+    <nav>
+      <div class="logo">Oulad Server</div>
+      <ul class="nav-links">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#services">Diensten</a></li>
+        <li><a href="#download">Snelle Toegang</a></li>
+      </ul>
+
+      <div class="burger">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+      </div>
+    </nav>
+
+    <div class="hero" id="home">
+      <h1>Welkom op mijn LAN Webserver</h1>
+      <p>Beheer je bestanden, verbind veilig en geniet van alle handige tools die ik heb samengebracht. Geen gedoe, gewoon efficiëntie!</p>
+      <a href="#download" class="button">Ontdek Meer</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="services" id="services">
+      <h2>Onze Diensten</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Nextcloud</h3>
+          <p>
+            Nextcloud biedt een persoonlijke cloudoplossing waarmee je veilig bestanden kunt opslaan, synchroniseren en delen binnen je lokale netwerk. Met bestandsversies, samenwerkingshulpmiddelen en privacy-instellingen houd je alles zelf in de hand.
+          </p>
+          <div class="service-details">
+            <ul>
+              <li><i class="fas fa-sync-alt"></i> Bestanden Synchroniseren</li>
+              <li><i class="fas fa-share-alt"></i> Eenvoudig Delen</li>
+              <li><i class="fas fa-lock"></i> Beveiligde Toegang</li>
+              <li><i class="fas fa-users"></i> Samenwerkingstools</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>OpenVPN <small style="font-size: 12px;">(Binnenkort Beschikbaar)</small></h3>
+          <p>
+            OpenVPN zorgt voor een veilige en betrouwbare VPN-verbinding. Versleutel je netwerkverkeer en bescherm je online privacy zodat je onbezorgd en flexibel op afstand toegang krijgt tot je LAN.
+          </p>
+          <div class="service-details">
+            <ul>
+              <li><i class="fas fa-shield-alt"></i> Veilige Verbinding</li>
+              <li><i class="fas fa-globe"></i> Toegang van Overal</li>
+              <li><i class="fas fa-key"></i> Sterke Encryptie</li>
+              <li><i class="fas fa-user-shield"></i> Privacy Bescherming</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="download" id="download">
+      <h2>Snelle Toegang</h2>
+      <a href="https://cloud-ouladserver.duckdns.org/" class="download-button" target="_blank"> <i class="fas fa-cloud"></i> Nextcloud
+      </a>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Oulad Server. Alle rechten voorbehouden.</p>
+    <p>Door de <a href="#">criticus</a> in mij: “Een webserver draait niet op magie, maar op passie... en heel veel koffie!”</p>
+  </footer>
+
+  <script>
+    const burger = document.querySelector('.burger');
+    const navLinks = document.querySelector('.nav-links');
+
+    burger.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+      burger.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.nav-links li a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('show');
+        burger.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>
